@@ -148,7 +148,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({ product, onQuantity
           >
             <Minus size={20} strokeWidth={1.5} />
           </button>
-          <span className="w-10 text-center">{quantity}</span>
+          <span className="w-5 text-center">{quantity}</span>
           <button
             onClick={handleIncrement}
             disabled={quantity >= product.stock}

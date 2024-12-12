@@ -27,25 +27,30 @@ const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
   };
 
   return (
-    <div className="max-w-xs mx-auto flex flex-col justify-between h-full w-full cursor-pointer border rounded-lg shadow-sm hover:shadow-md transition-shadow p-2 py-3 bg-white">
-    {/* Envolver solo la parte que debería ser clickeable para la navegación */}
+    <div className="flex flex-col justify-between w-full sm:max-w-sm md:max-w-md lg:max-w-xs mx-auto border rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 bg-white">
+    {/* Enlace clickeable */}
     <Link href={`/product/${product.id}`} passHref>
       <div className="flex flex-col justify-between">
+        {/* Imagen del producto */}
         {product.image && (
           <Image
             src={product.image}
-            alt={product?.title || 'product image'}
-            width={180}
-            height={180}
+            alt={product?.title || "product image"}
+            width={300}
+            height={300}
             priority
-            className="w-full h-48 mb-4 object-contain cursor-pointer object-center transition-transform duration-200 hover:scale-105"
+            className="w-full h-36 sm:h-44 md:h-48 object-contain object-center mb-4 cursor-pointer transition-transform duration-200 hover:scale-105"
           />
         )}
-        <div className="px-4 mb-2 py-2">
-          <span className="text-xl font-bold text-gray-800">{formatPrice(product.price)}</span>
+
+        {/* Información del producto */}
+        <div className="px-2 sm:px-4 mb-2 py-2">
+          <span className="text-lg sm:text-xl font-bold text-gray-800">
+            {formatPrice(product.price)}
+          </span>
           {product.listingPrice && (
             <div className="flex items-center space-x-2">
-              <span className="text-md line-through text-gray-400">
+              <span className="text-sm sm:text-md line-through text-gray-400">
                 {formatPrice(product.listingPrice)}
               </span>
               <span className="bg-blue-100 text-blue-800 text-xs font-bold px-1.5 py-1 rounded-lg">
@@ -53,26 +58,37 @@ const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
               </span>
             </div>
           )}
-          <h3 className="text-sm font-semibold text-gray-800 mb-2 mt-2 line-clamp-2">{product.title}</h3>
-          <p className="text-gray-500 text-sm line-clamp-1">{product.description}</p>
+          <h3 className="text-sm sm:text-md font-semibold text-gray-800 mb-2 mt-2 line-clamp-2">
+            {product.title}
+          </h3>
+          <p className="text-gray-500 text-xs sm:text-sm line-clamp-1">
+            {product.description}
+          </p>
         </div>
       </div>
     </Link>
-      <div className="flex justify-center py-2">
-         {currentQuantity === 0 ? (
-            <button onClick={handleAddToCart} className="w-full py-2 flex items-center justify-center rounded-full border-2 border-[#254a96] text-sm font-semibold text-[#264b97] transition-all hover:bg-[#264b97] hover:text-white md:px-4 md:py-2"
-            >
-              Agregar
-              <ShoppingCart className="ml-2" size={20} />
-            </button>
-          ) : (
-            <button onClick={() => removeFromCart(product.id)} className="w-full py-2 flex items-center justify-center rounded-full border-2 border-[#254a96] text-sm font-semibold text-[#264b97] transition-all hover:bg-red-600 hover:border-red-600 hover:text-white md:px-4 md:py-2">
-              Eliminar del carrito
-            </button>
-          )}
+
+    {/* Botón de agregar/eliminar */}
+    <div className="flex justify-center py-2">
+      {currentQuantity === 0 ? (
+        <button
+          onClick={handleAddToCart}
+          className="w-full py-2 flex items-center justify-center rounded-full border-2 border-[#254a96] text-sm sm:text-md font-semibold text-[#264b97] transition-all hover:bg-[#264b97] hover:text-white"
+        >
+          Agregar
+          <ShoppingCart className="ml-2" size={20} />
+        </button>
+      ) : (
+        <button
+          onClick={() => removeFromCart(product.id)}
+          className="w-full py-2 flex items-center justify-center rounded-full border-2 border-[#254a96] text-sm sm:text-md font-semibold text-[#264b97] transition-all hover:bg-red-600 hover:border-red-600 hover:text-white"
+        >
+          Eliminar del carrito
+        </button>
+      )}
     </div>
   </div>
-  );
+);
 };
 
 export default ProductCardHome;

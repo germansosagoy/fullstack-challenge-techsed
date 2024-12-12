@@ -16,7 +16,7 @@ export default async function ProductPage({ params }: Params) {
 
   // devolvemos el producto encontrado para ser renderizado en la vista
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-10 bg-[#f1f1f1]">
+    <div className="flex min-h-screen flex-col items-center justify-between px-4 sm:px-10 py-6 bg-[#f1f1f1]">
       <ProductDetails product={product} />
     </div>
   );

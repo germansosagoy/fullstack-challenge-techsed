@@ -8,10 +8,10 @@ interface ProductDetailsProps {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
   return (
-    <section className="max-w-6xl mx-auto rounded-xl px-8 md:px-8 py-6">
-      <div className="flex justify-center py-4 p-2">
-        <ProductCardDetails key={product.id} product={product} />
-      </div>
-    </section>
+    <section className="mx-auto px-4 sm:px-8 py-6 w-full">
+    <div className="flex justify-center py-4 w-full">
+      <ProductCardDetails key={product.id} product={product} />
+    </div>
+  </section>
   );
 }
