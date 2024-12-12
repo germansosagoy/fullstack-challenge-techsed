@@ -28,7 +28,7 @@ Asegúrate de tener instalados los siguientes programas en tu máquina:
    cd fullstack-challenge-techsed
    
 
-3. Navega al directorio del proyecto:
+3. Instala las dependencias:
    ```bash
    npm install
 
