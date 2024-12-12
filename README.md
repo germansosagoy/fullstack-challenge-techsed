@@ -35,7 +35,8 @@ Asegúrate de tener instalados los siguientes programas en tu máquina:
 4. Ejecución de la Aplicación
 Para iniciar el servidor de desarrollo, ejecuta el siguiente comando:
    ```bash
-   npm install
+   npm run dev
+
 
 
 Luego abre http://localhost:3000 en tu navegador para ver el resultado.
