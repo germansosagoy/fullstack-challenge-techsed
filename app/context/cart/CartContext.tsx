@@ -10,9 +10,11 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 // proveedor del carrito
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const [cart, setCart] = useState<Cart>(() => {
-      const savedCart = localStorage.getItem("cart"); // cargar carrito desde el LocalStorage
-      if (savedCart) {
-        return JSON.parse(savedCart);
+      if (typeof window !== "undefined") {  // Verifica que el entorno es cliente
+        const savedCart = localStorage.getItem("cart"); // cargar carrito desde el LocalStorage
+        if (savedCart) {
+          return JSON.parse(savedCart);
+        }
       }
       // si no hay carrito guardado, crear uno nuevo
       return {
