@@ -9,26 +9,34 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // proveedor del carrito
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-    const [cart, setCart] = useState<Cart>(() => {
-      if (typeof window !== "undefined") {  // Verifica que el entorno es cliente
-        const savedCart = localStorage.getItem("cart"); // cargar carrito desde el LocalStorage
-        if (savedCart) {
-          return JSON.parse(savedCart);
-        }
-      }
-      // si no hay carrito guardado, crear uno nuevo
-      return {
+  const [cart, setCart] = useState<Cart>({
+    id: "", 
+    items: [],
+    quantity: 0,
+    createdAt: new Date(0),
+  });
+  
+  useEffect(() => {
+    // recuperamos el carrito desde localStorage solo en el cliente
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    } else {
+      setCart({
         id: uuidv4(),
         items: [],
         quantity: 0,
         createdAt: new Date(),
-      };
-    });
+      });
+    }
+  }, []);
 
-    useEffect(() => {
-      localStorage.setItem("cart", JSON.stringify(cart)); // guardar carrito en el LocalStorage
-    },[cart]);
-
+  // guardar el carrito en localStorage cuando cambie
+  useEffect(() => {
+    if (cart.id) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
   
   // Función para agregar un producto al carrito
   const addToCart = (product: Product, quantity: number) => {
