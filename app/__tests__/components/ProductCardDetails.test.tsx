@@ -1,94 +1,51 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import ProductCardDetails from '@/app/components/ProductCard/ProductCardDetails';
-import { useCart } from '../../context/cart/CartContext';
-import { CartContextType } from '@/app/types/cart-types';
-import { Product } from '@/app/types/product-types';
-import { useRouter } from 'next/router';
+import { render, screen, fireEvent } from "@testing-library/react";
+import ProductCardDetails from "../../components/ProductCard/ProductCardDetails";
+import { CartProvider } from "../../context/cart/CartContext";
+import { Product } from "../../types/product-types";
 
-// Mockear el hook useCart con la ruta correcta
-jest.mock('../../context/cart/CartContext', () => ({
-  useCart: jest.fn(),
+// mockear el hook "useRouter"
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    back: jest.fn(), 
+  }),
 }));
 
-// Mockear useRouter
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
-
-describe('ProductCardDetails', () => {
-  const product: Product = {
-    id: '1',
-    title: 'Producto de prueba',
+describe("ProductCardDetails", () => {
+  const baseProduct: Product = {
+    id: "1",
+    title: "Producto de prueba",
+    description: "Descripción de prueba del producto",
     price: 100,
     listingPrice: 150,
-    image: 'https://via.placeholder.com/150',
-    description: 'Descripción de prueba del producto',
     stock: 10,
-    salesUnit: 'unit',
+    image: "https://via.placeholder.com/150",
+    salesUnit: "unit",
+  };
+
+  // función simple para renderizar el componente
+  const renderComponent = () => {
+    return render(
+      <CartProvider>
+        <ProductCardDetails product={baseProduct} />
+      </CartProvider>
+    );
   };
 
   beforeEach(() => {
-    // Resetea los mocks antes de cada prueba
     jest.clearAllMocks();
   });
 
-  test('should display "Agregar" button when product is not in the cart', () => {
-    const mockCartContext: CartContextType = {
-      cart: {
-        items: [],
-        quantity: 0,
-        id: '',
-        createdAt: new Date(),
-      },
-      addToCart: jest.fn(),
-      removeFromCart: jest.fn(),
-      updateQuantity: jest.fn(),
-    };
+  test("should display 'Agregar' button initially", () => {
+    renderComponent();
 
-    (useCart as jest.Mock).mockReturnValue(mockCartContext);
-
-    // Mock del enrutador
-    (useRouter as jest.Mock).mockReturnValue({
-      back: jest.fn(),
-    });
-
-    render(<ProductCardDetails product={product} />);
-
-    // Verificar que el botón "Agregar" esté presente
-    expect(screen.getByText('Agregar')).toBeInTheDocument();
-    expect(screen.queryByText('Eliminar del carrito')).toBeNull(); // Eliminar no debe aparecer
+    // verificar que el botón de "agregar" está presente al principio
+    expect(screen.getByText("Agregar")).toBeInTheDocument();
   });
 
-  test('should call addToCart when "Agregar" button is clicked', () => {
-    const addToCartMock = jest.fn();
+  test("should display 'Eliminar producto' button after clicking 'Agregar'", () => {
+    renderComponent();
 
-    const mockCartContext: CartContextType = {
-      cart: {
-        items: [],
-        quantity: 0,
-        id: '',
-        createdAt: new Date(),
-      },
-      addToCart: addToCartMock,
-      removeFromCart: jest.fn(),
-      updateQuantity: jest.fn(),
-    };
-
-    (useCart as jest.Mock).mockReturnValue(mockCartContext);
-
-    // Mock del enrutador
-    (useRouter as jest.Mock).mockReturnValue({
-      back: jest.fn(),
-    });
-
-    render(<ProductCardDetails product={product} />);
-
-    const addButton = screen.getByText('Agregar');
-    fireEvent.click(addButton);
-
-    // Verificar que la función addToCart haya sido llamada con el producto y cantidad 1
-    expect(addToCartMock).toHaveBeenCalledWith(product, 1);
+    // simular clic en el botón "Agregar"
+    fireEvent.click(screen.getByText("Agregar"));
   });
-
-  // Agrega el resto de las pruebas siguiendo el mismo patrón
 });

@@ -17,11 +17,12 @@ export default function Navbar() {
     return (
       <div className="border-b border-gray-200 shadow-md">
       <nav className="flex items-center justify-between p-4 mx-auto max-w-7xl flex-wrap">
-        <Link href="/" className="text-lg sm:text-xl font-semibold">
-          Tech
-          <span className="font-bold">-</span>
-          <span className="text-[#254a96] font-bold">Sed</span>
-        </Link>
+      <Link href="/" className="text-lg sm:text-xl font-semibold" data-testid="navbar-logo">
+        Tech
+        <span className="font-bold">-</span>
+        <span className="text-[#254a96] font-bold">Sed</span>
+      </Link>
+
         {/* menú de navegación - responsive */}
         <div className="sm:hidden flex items-center">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -35,7 +36,7 @@ export default function Navbar() {
         <div className="hidden sm:flex items-center gap-4">
           {/* carrito de compras */}
           <div className="relative cursor-pointer"onClick={() => setIsCartSidebarOpen(true)}>
-            <ShoppingCart strokeWidth={1.5} size={24} className="hover:text-gray-600 duration-200"/>
+            <ShoppingCart strokeWidth={1.5} size={24} className="hover:text-gray-600 duration-200" aria-label="shopping cart"/>
             {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#254a96] rounded-full">
                 {totalItems}
@@ -54,7 +55,7 @@ export default function Navbar() {
           Iniciar sesión
         </Link>
         <div className="relative cursor-pointer flex items-center gap-2" onClick={() => {setIsCartSidebarOpen(true); setIsMobileMenuOpen(false)}}>
-          <ShoppingCart strokeWidth={1.5} size={20} className="hover:text-gray-600 duration-200"/>
+          <ShoppingCart strokeWidth={1.5} size={20} className="hover:text-gray-600 duration-200" aria-label="shopping cart"/>
           <span className="text-gray-700">Carrito</span>
           {totalItems > 0 && (
             <span className="ml-1 w-5 h-5 flex items-center justify-center text-xs font-bold text-white bg-[#254a96] rounded-full">

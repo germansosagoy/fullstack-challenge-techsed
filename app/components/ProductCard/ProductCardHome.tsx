@@ -14,7 +14,7 @@ interface ProductCardHomeProps {
 const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
   const { cart, addToCart, removeFromCart } = useCart();
 
-  // Obtener la cantidad actual del producto en el carrito
+  // obtiene la cantidad actual del producto en el carrito
   const cartItem = cart.items.find((item) => item.product.id === product.id);
   const currentQuantity = cartItem ? cartItem.quantity : 0;
 
@@ -28,7 +28,6 @@ const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
 
   return (
     <div className="flex flex-col justify-between w-full sm:max-w-sm md:max-w-md lg:max-w-xs mx-auto border rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 bg-white">
-    {/* Enlace clickeable */}
     <Link href={`/product/${product.id}`} passHref>
       <div className="flex flex-col justify-between">
         {/* Imagen del producto */}
@@ -43,7 +42,7 @@ const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
           />
         )}
 
-        {/* Información del producto */}
+        {/* info del producto */}
         <div className="px-2 sm:px-4 mb-2 py-2">
           <span className="text-lg sm:text-xl font-bold text-gray-800">
             {formatPrice(product.price)}
@@ -68,7 +67,7 @@ const ProductCardHome: React.FC<ProductCardHomeProps> = ({ product }) => {
       </div>
     </Link>
 
-    {/* Botón de agregar/eliminar */}
+    {/* botones de agregar/eliminar producto */}
     <div className="flex justify-center py-2">
       {currentQuantity === 0 ? (
         <button

@@ -5,8 +5,7 @@ import { CartContextType } from '@/app/types/cart-types';
 import { Product } from '@/app/types/product-types';
 
 
-
-// Mockear el hook useCart con la ruta correcta
+// mockear el hook "useCart" 
 jest.mock('../../context/cart/CartContext', () => ({
     useCart: jest.fn(),
   }));
@@ -73,7 +72,7 @@ describe('ProductCardHome', () => {
     const addButton = screen.getByText('Agregar');
     fireEvent.click(addButton);
 
-    // Verificar que la función addToCart haya sido llamada con el producto y cantidad 1
+    // veriifica que la función addToCart se llame con el producto y cantidad 1
     expect(addToCartMock).toHaveBeenCalledWith(product, 1);
   });
 
@@ -94,7 +93,7 @@ describe('ProductCardHome', () => {
   
     render(<ProductCardHome product={product} />);
 
-    // verifica que el botón "Eliminar del carrito" esté presente
+    // verificar que el botón "Eliminar del carrito" esté presente
     expect(screen.getByText('Eliminar del carrito')).toBeInTheDocument();
     expect(screen.queryByText('Agregar')).toBeNull();
   });
@@ -121,7 +120,7 @@ describe('ProductCardHome', () => {
     const removeButton = screen.getByText('Eliminar del carrito');
     fireEvent.click(removeButton);
 
-    // verifica que la función "removeFromCart" haya sido llamada con el ID del producto
+    // verificar que la función "removeFromCart" sea llamada con el ID del producto
     expect(removeFromCartMock).toHaveBeenCalledWith(product.id);
   });
 });
