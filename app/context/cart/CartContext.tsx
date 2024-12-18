@@ -9,7 +9,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // proveedor del carrito
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<Cart>({
+  const [cart, setCart] = useState<Cart>(
+    
+    {
     id: "", 
     items: [],
     quantity: 0,
